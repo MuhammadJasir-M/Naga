@@ -1,0 +1,7 @@
+project_id = "ndxfqiwryuzjhwujqpca"
+
+[functions.send-emergency-alert]
+verify_jwt = false
+
+[functions.send-location-alerts]
+verify_jwt = false
