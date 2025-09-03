@@ -1,6 +1,7 @@
 
 import { Alert } from '@/types/alert';
 import { indianStates } from '@/data/indianStates';
+import EnhancedAlertService from './enhancedAlertService';
 
 // Mock API service that simulates fetching from government sources
 class AlertService {
@@ -8,8 +9,11 @@ class AlertService {
   private alerts: Alert[] = [];
   private subscribers: Array<{ email?: string; phone?: string; preferences: any }> = [];
   private usedAlertIds: Set<string> = new Set();
+  private enhancedService: EnhancedAlertService;
 
-  private constructor() {}
+  private constructor() {
+    this.enhancedService = EnhancedAlertService.getInstance();
+  }
 
   static getInstance(): AlertService {
     if (!AlertService.instance) {
@@ -695,7 +699,10 @@ class AlertService {
         // Send notifications for new alerts
         if (newAlerts.length > 0 && this.subscribers.length > 0) {
           console.log(`📨 Sending notifications for ${newAlerts.length} new alerts`);
-          await this.sendNotifications(newAlerts);
+          // Use enhanced service for location-based distribution
+          for (const alert of newAlerts) {
+            await this.enhancedService.processAndDistributeAlert(alert);
+          }
         }
         
         onUpdate(newAlerts);

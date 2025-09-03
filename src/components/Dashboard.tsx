@@ -10,9 +10,11 @@ import { UserProfile } from './UserProfile';
 import { EnhancedSubscriptionForm } from './EnhancedSubscriptionForm';
 import { LanguageSelector } from './LanguageSelector';
 import { TestLocationAlert } from './TestLocationAlert';
+import { EnhancedAlertTester } from './EnhancedAlertTester';
 import { mockAlerts, governmentSources } from "@/data/mockAlerts";
 import { Alert } from "@/types/alert";
 import AlertService from "@/services/alertService";
+import EnhancedAlertService from "@/services/enhancedAlertService";
 import { useToast } from "@/hooks/use-toast";
 import { 
   RefreshCw,
@@ -30,6 +32,7 @@ export const Dashboard = () => {
   const [autoRefreshEnabled, setAutoRefreshEnabled] = useState(true);
   const autoRefreshInterval = useRef<NodeJS.Timeout>();
   const alertService = AlertService.getInstance();
+  const enhancedAlertService = EnhancedAlertService.getInstance();
   const { toast } = useToast();
 
   const activeAlerts = alerts.filter(alert => alert.isActive);
@@ -228,7 +231,7 @@ export const Dashboard = () => {
           <TabsContent value="subscribe">
             <div className="space-y-6">
               <EnhancedSubscriptionForm />
-              <TestLocationAlert />
+              <EnhancedAlertTester />
             </div>
           </TabsContent>
 

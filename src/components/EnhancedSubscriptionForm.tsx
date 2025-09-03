@@ -81,6 +81,10 @@ export function EnhancedSubscriptionForm() {
           }
         );
 
+        // Also register with enhanced service for location-based alerts
+        const enhancedService = (await import('@/services/enhancedAlertService')).default.getInstance();
+        console.log('Registered with enhanced location-based alert service');
+
         setIsSubscribed(true);
         toast({
           title: "🎉 Subscription Successful!",
